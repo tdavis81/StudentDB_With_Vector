@@ -1,0 +1,99 @@
+//Name        : Tyler Davis
+//Program     : Student Database 
+//Date        : 8.28.2018
+//Professor   : Jeff Joiner 
+//Last Edited : 8:12PM 8.28.2018
+
+#include "stdafx.h"
+#include <iostream>
+#include <vector> // This includes the vector class
+#include <string> // This includes the string class to be used with cin to read strings
+
+
+using namespace std;
+
+class Students {
+	public:
+
+	string firstName;
+	string lastName;
+	string grade;
+
+};
+
+vector<Students> studentVector;
+
+bool isNumbers(string input) {
+	int grade = stoi(input); // Convert String to int
+	if (grade < 0 || grade > 12) {
+		return false;
+	} else {
+		return true;
+	}
+
+}
+
+void printDirections() {
+
+	cout << "Welcome to Student Database V1\n";
+	cout << "Coded By Tyler Davis\n";
+
+}
+
+void createStudent() {
+
+	Students student;
+	string grade = "";
+	cout << "Please enter the new student's first name.\n";
+	cin >> student.firstName;
+	cout << "Please enter the new student's last name.\n";
+	cin >> student.lastName;
+	cout << "Please enter the new student's grade.\n";
+	cin >> grade;
+	while (!isNumbers(grade)) {
+		cout << "You have entered and invalid grade 0 - 12.\n";
+		cout << "Please enter the new student's grade.\n";
+		cin >> grade;
+	}
+	student.grade = grade;
+	studentVector.push_back(student);
+}
+
+int continueAdding() {
+
+	int userInput = 0;
+
+	cout << "Please press 1 to create a student or -1 to exit!\n";
+	cin >> userInput; 
+	while (userInput != 1 && userInput != -1) {
+		cout << "You have entered and invalid choice.\n";
+		continueAdding();
+	}
+	
+	return userInput;
+}
+
+void startStudentDB() {
+	int returnedInput = 0;
+	
+	printDirections();
+	returnedInput = continueAdding();
+	while (returnedInput != -1) {
+		createStudent();
+		returnedInput = continueAdding();
+	}
+	for (const auto& s : studentVector) {
+		cout << endl;
+		cout << "You have chose to end, you have added the following students.\n";
+		cout << "Firstname : " << s.firstName << ", " << "Lastname : " 
+				<< s.lastName << ", " << "Grade : " << s.grade << endl;
+	}
+
+}
+
+int main()
+{
+	startStudentDB();
+	return 0;
+}
+
